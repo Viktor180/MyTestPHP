@@ -17,7 +17,9 @@ require_once  __DIR__.'/lib/StudentLoader.php';
 require_once __DIR__ . '/lib/PdoStudentStorage.php';
 require_once  __DIR__.'/lib/PresentLoader.php';
 require_once __DIR__ . '/lib/PdoPresentStorage.php';
-/*require_once __DIR__.'/lib/Present.php';*/
+require_once __DIR__.'/lib/PresentStudent.php';
+require_once __DIR__.'/lib/Present.php';
+
 
     $configuration = array (
     'db_dsn' => 'mysql:host=localhost;dbname=School',

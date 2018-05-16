@@ -29,6 +29,22 @@ $singleStudents=$studentLoader->getStudentsById($form_id);
            <!-- Bootstrap -->
            <link href="css/Style.css" rel="stylesheet">
            <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <link rel="stylesheet" href="/resources/demos/style.css">
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script>
+                $(function() {
+                    var currentDate = new Date();
+                    $('#datepicker').datepicker({
+                        inline: true,
+                        showOtherMonths: true,
+                        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        dateFormat: 'yy/mm/dd'
+                    });
+                    $("#datepicker").datepicker("setDate", currentDate,);
+                });
+            </script>
 
            <![endif]-->
     </head>
@@ -43,9 +59,9 @@ $singleStudents=$studentLoader->getStudentsById($form_id);
 
 
 
-        <form action="/lib/Present.php" method ="POST">
+        <form action="present.php" method ="POST">
         <table>
-            <tr><input  type="date" </tr>
+            <tr><input type="text" id="datepicker" name="datepickerp"> </tr>
             <?php foreach ($schools as $school):?>
             <tr>
                 <td colspan="4"><?php echo $school->getName(); ?>
@@ -66,14 +82,20 @@ $singleStudents=$studentLoader->getStudentsById($form_id);
             <tr>
                 <td><?php echo $student->getName(); ?></td>
                 <td><?php echo $student->getSurname(); ?></td>
-                <td><?php echo $student->getId(); ?></td>
-                <td><input type="checkbox"></td>
-            </tr>
-            <?php endforeach; endforeach; endforeach; ?>
-        </table>
-            <button type="submit" style=" height: 50px;width: 50px;background-color: #4cae4c"></button>
-        </form>
+                <td><?php echo $student->getId(); ?>
+                <input type="hidden" id ="student_id_<?php echo $student->getID();?>"  name="student_id[]" value='<?php echo $student->getId(); ?>'>
+                </td><?php ?>
+                <td><input type="checkbox" id="present<?php echo $student->getId();?>" name="present_<?php echo $student->getId();?>"></td>
 
+             </tr>
+                    <?php
+                    endforeach; endforeach; endforeach; ?>
+
+        </table>
+
+            <button type="submit" style=" height: 50px;width: 50px;background-color: #4cae4c"></button>
+
+        </form>
 
 
     </section>
