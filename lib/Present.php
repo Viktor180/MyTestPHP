@@ -51,15 +51,41 @@ class Present
 
     public function compare ()
     {
-        $datep = $_POST['datepickerp'];
+
         $presentStudents = $_POST['student_id'];
         $presentedCheck = self::getPresent();
-         foreach ($presentStudents as $presentStudent) {
+
+             foreach ($presentStudents as $presentStudent) {
              foreach ($presentedCheck as $cheked)
              {
                  if ($cheked == 'present_'.$presentStudent)
                  {
-                     echo $presentStudent." was ";
+                     //echo $presentStudent." was ";
+                     $servername = "localhost";
+                     $username = "root";
+                     $password = "";
+                     $dbname = "School";
+
+                     try {
+                         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                         // set the PDO error mode to exception
+                         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                         $id_student = $presentStudent;
+                         $datep = $_POST['datepickerp'];
+                         $present = true;
+                         $sql = "INSERT INTO present (id_student, datep, present)
+                           VALUES ('$id_student', '$datep', '$present')";
+                         // use exec() because no results are returned
+
+                         $conn->exec($sql);
+                         echo "New record created successfully";
+                     }
+                     catch(PDOException $e)
+                     {
+                         echo $sql . "<br>" . $e->getMessage();
+                     }
+
+                     $conn = null;
                  }
              }
          }
