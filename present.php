@@ -8,6 +8,7 @@
 
 
 require_once __DIR__.'/boot.php';
+$container = new Container($configuration);
 
 $present = new Present();
 
@@ -15,8 +16,8 @@ $present = new Present();
 
 //$show = $present->compare();
 
-$presents = $present->compare();
-//var_dump($presents);
+$presents = $present->handlePost();
+
 
 
 

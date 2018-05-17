@@ -15,26 +15,24 @@ require_once __DIR__.'/../boot.php';
 class Present
 {
 
-    /*public function wow(){
 
-    $count = count( $_POST['present'] );
-    for ( $i = 0; $i < $count; $i++ )
-    echo $_POST['present'][$i], '<br />';
-    die;
-    }*/
+    public function handlePost()
+    {
+        $postData = $_POST;
+        foreach ($postData['student_id'] as $student_id) {
+            $isPresent = (isset($_POST['present_'.$student_id]) && $_POST['present_'.$student_id] === 'on');
 
-     public function wow ()
-     {
+            $pdo = new PDO('mysql:host=localhost;dbname=School','root','');
+            $datep = $_POST['datepickerp'];
+            $present = $isPresent;
+            $statement = $pdo->prepare("INSERT INTO present (id_student, datep, present)
+             VALUES ('$student_id', '$datep', '$present')");
+            $statement->execute();
+        }
+        echo "Saved Successfully";
+    }
 
-         echo '<pre>';
-         var_dump($_POST);
-         die;
-
-     }
-
-
-
-    public function getPresent ()
+   /* public function getPresent ()
      {   $allDataFromForm = array();
          $allDataFromForm  = $_POST;
          $presentArray = array();
@@ -55,42 +53,51 @@ class Present
         $presentStudents = $_POST['student_id'];
         $presentedCheck = self::getPresent();
 
-             foreach ($presentStudents as $presentStudent) {
-             foreach ($presentedCheck as $cheked)
+             foreach ($presentStudents as $presentStudent)
+        {
+                foreach ($presentedCheck as $cheked)
              {
-                 if ($cheked == 'present_'.$presentStudent)
-                 {
-                     //echo $presentStudent." was ";
+                     if ('present_'.$presentStudent == $cheked) {
+                         $present = true;
+                     }
+
+                     else {
+                         $present = false;
+
+                     }
+
                      $servername = "localhost";
                      $username = "root";
                      $password = "";
                      $dbname = "School";
 
                      try {
-                         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                         // set the PDO error mode to exception
-                         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                         $id_student = $presentStudent;
-                         $datep = $_POST['datepickerp'];
-                         $present = true;
-                         $sql = "INSERT INTO present (id_student, datep, present)
-                           VALUES ('$id_student', '$datep', '$present')";
-                         // use exec() because no results are returned
+                             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                             // set the PDO error mode to exception
+                             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                             $id_student = $presentStudent;
+                             $datep = $_POST['datepickerp'];
 
-                         $conn->exec($sql);
-                         echo "New record created successfully";
+                             $sql = "INSERT INTO present (id_student, datep, present)
+                           VALUES ('$id_student', '$datep', '$present')";
+                             // use exec() because no results are returned
+
+                             $conn->exec($sql);
                      }
                      catch(PDOException $e)
                      {
                          echo $sql . "<br>" . $e->getMessage();
                      }
+                         $conn = null;
 
-                     $conn = null;
-                 }
+
              }
-         }
+        }
+        echo "Saved Successfully";
+         }*/
+
      }
-}
+
 
 
 

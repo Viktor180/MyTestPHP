@@ -21,6 +21,7 @@ require_once __DIR__.'/lib/PresentStudent.php';
 require_once __DIR__.'/lib/Present.php';
 
 
+
     $configuration = array (
     'db_dsn' => 'mysql:host=localhost;dbname=School',
     'db_user' => 'root',
